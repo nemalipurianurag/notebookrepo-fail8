@@ -111,6 +111,10 @@ resource "google_notebooks_runtime" "managed" {
   project  = data.google_project.project.project_id
   name     = "notebooks-runtime-03"
   location = "us-central1"
+  depends_on = [
+    google_kms_crypto_key_iam_member.service_identity_iam_crypto_key,
+    google_notebooks_instance.instance
+  ]
   access_config {
     access_type   = "SERVICE_ACCOUNT"
     runtime_owner = google_service_account.custom_sa.email
